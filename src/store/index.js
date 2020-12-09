@@ -6,7 +6,7 @@ import {DateTime} from "luxon";
 export default createStore({
     state: {
         peerId: 1,
-        user: JSON.parse(Cookies.get('user')) || undefined,
+        user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : undefined,
         api: 'http://localhost:3000/'
     },
     mutations: {
