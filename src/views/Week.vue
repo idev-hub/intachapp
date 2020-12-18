@@ -31,6 +31,7 @@ export default {
       return _date === _local
     },
     getDate(date) {
+      console.log(date)
       return DateTime.fromISO(date, {
         locale: 'ru-RU'
       }).toFormat('d MMMM, EEEE')

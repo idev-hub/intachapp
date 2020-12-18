@@ -1,13 +1,12 @@
 import {createStore} from 'vuex'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import {DateTime} from "luxon";
 
 export default createStore({
     state: {
         peerId: 1,
         user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : undefined,
-        api: 'http://localhost:3000/'
+        api: 'https://intachserver.herokuapp.com/'
     },
     mutations: {
         setUser(state, _user) {
@@ -17,11 +16,7 @@ export default createStore({
     actions: {
         getUser: ({state}) => {
             return new Promise((resolve, reject) => {
-                axios.get(`${state.api}api/user/${state.peerId}`, {
-                    headers: {
-                        'x-should-applied': DateTime.local().toMillis()
-                    }
-                }).then(response => {
+                axios.get(`${state.api}api/users/${state.peerId}`).then(response => {
                     resolve(response.data)
                 }).catch(reason => {
                     reject(reason)
@@ -30,14 +25,25 @@ export default createStore({
         },
         setUser: ({state, commit}, params) => {
             return new Promise((resolve, reject) => {
-                axios.post(`${state.api}api/user`, params, {
-                    headers: {
-                        'x-should-applied': DateTime.local().toMillis()
+                axios(`${state.api}api/users/${state.peerId}`).then(user => {
+                    if (user.data) {
+                        axios.put(`${state.api}api/users/${state.peerId}`, params).then(response => {
+                            Cookies.set('user', response.data)
+                            commit('setUser', response.data)
+                            resolve(response.data)
+                        }).catch(reason => {
+                            reject(reason)
+                        })
+                    } else {
+                        console.log(params)
+                        axios.post(`${state.api}api/users`, params).then(response => {
+                            Cookies.set('user', response.data)
+                            commit('setUser', response.data)
+                            resolve(response.data)
+                        }).catch(reason => {
+                            reject(reason)
+                        })
                     }
-                }).then(response => {
-                    Cookies.set('user', response.data)
-                    commit('setUser', response.data)
-                    resolve(response.data)
                 }).catch(reason => {
                     reject(reason)
                 })
@@ -45,7 +51,7 @@ export default createStore({
         },
         getGroups: ({state}, params) => {
             return new Promise((resolve, reject) => {
-                axios.get(`${state.api}api/college/${params.college}/groups`, {
+                axios.get(`${state.api}api/colleges/${params.college}/methods/groups`, {
                     params: {
                         complex: params.complex
                     }
@@ -58,7 +64,7 @@ export default createStore({
         },
         getComplexes: ({state}, params) => {
             return new Promise((resolve, reject) => {
-                axios.get(`${state.api}api/college/${params.college}/complexes`).then(value => {
+                axios.get(`${state.api}api/colleges/${params.college}/methods/complexes`).then(value => {
                     return resolve(value.data)
                 }).then(response => {
                     return resolve(response.data)
@@ -71,7 +77,7 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 axios.get(`${state.api}api/colleges`, {
                     params: {
-                        city: params.city || undefined
+                        cityId: params.city || undefined
                     }
                 }).then(response => {
                     return resolve(response.data)
@@ -84,7 +90,7 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 axios.get(`${state.api}api/cities`, {
                     params: {
-                        region: params.region || undefined
+                        regionId: params.region || undefined
                     }
                 }).then(response => {
                     return resolve(response.data)
@@ -106,7 +112,7 @@ export default createStore({
         },
         getWeekLessons: ({state}, params) => {
             return new Promise((resolve, reject) => {
-                axios.get(`${state.api}api/college/${params['college']}/lessonsWeek`, {
+                axios.get(`${state.api}api/colleges/${params['college']}/methods/lessonsWeek`, {
                     params: {
                         complex: params['complex'],
                         group: params['group']

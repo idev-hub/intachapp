@@ -87,7 +87,8 @@ export default {
           college: this.college,
           city: this.city,
           complex: this.complex,
-          group: this.group
+          group: this.group,
+          region: this.region
         })
 
         return this.$router.push({
