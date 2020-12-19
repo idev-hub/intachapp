@@ -39,6 +39,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/style.css";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
 
 $nav-height: 50px;
 
@@ -47,11 +48,11 @@ $nav-height: 50px;
 }
 
 html, body {
-  font-family: Arial, sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #ffffff;
   margin: 0 0 $nav-height 0;
   background: #2f3640;
-  padding: 10px 0;
+  padding: 40px 0 0 0;
 }
 
 #nav {
@@ -109,6 +110,17 @@ html, body {
   margin: auto;
   max-width: 600px;
   width: 100%;
+}
+
+.title-page{
+  position: absolute;
+  left: 20px;
+  top: 5px;
+  color: #728193;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+  letter-spacing: .07em;
 }
 
 </style>

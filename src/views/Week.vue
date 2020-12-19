@@ -1,11 +1,13 @@
 <template>
   <div class="app-error" v-if="error">{{ error.message }}</div>
-  <p>Расписание на неделю для {{ group }}</p>
+
+  <Loader :active="loading"></Loader>
+
+  <p class="title-page">Расписание для группы {{ group }}.</p>
 
   <div class="lessons">
     <div v-for="lesson in lessons" :key="lesson['date']" :class="{ current: isCurrent(lesson['date']) }">
-      <p v-if="isCurrent(lesson['date'])" class="current-notification">Сегодня</p>
-      <p class="date-lesson">Расписание на: <span>{{ getDate(lesson['date']) }}</span></p>
+      <p class="notification"><span>{{ getDate(lesson['date']) }}</span></p>
       <div class="items">
         <Lesson v-for="item in lesson.data" :key="item.number" v-bind="item"/>
       </div>
@@ -16,14 +18,16 @@
 <script>
 import {DateTime} from 'luxon';
 import Lesson from "@/components/Lesson";
+import Loader from "@/components/Loader";
 
 export default {
   name: 'Week',
-  components: {Lesson},
+  components: {Loader, Lesson},
   props: ['region', 'city', 'college', 'complex', 'group'],
   data: () => ({
     lessons: [],
-    error: undefined
+    error: undefined,
+    loading: true,
   }),
   methods: {
     isCurrent(date) {
@@ -41,6 +45,7 @@ export default {
   mounted() {
     this.$store.dispatch('getWeekLessons', this.$props).then(res => {
       this.lessons = res
+      this.loading = false
     }).catch(e => {
       this.error = e
     })
@@ -58,19 +63,22 @@ export default {
 <style lang="scss" scoped>
 .lessons {
   & > div {
-    margin-bottom: 150px;
+    margin-bottom: 100px;
 
-    .current-notification {
+    .notification {
+      position: sticky;
+      top: 0;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       height: 40px;
-      color: #fff;
+      color: #ffffff;
       margin: -20px -20px 20px -20px;
-      background: #58a758;
+      background: #3a424c;
       font-weight: 600;
-      font-size: 12px;
+      font-size: 13px;
       text-transform: uppercase;
     }
 
@@ -78,6 +86,22 @@ export default {
       background: #3a424c;
       padding: 20px;
       margin: 0 -20px;
+
+      .notification {
+        background: #58a758;
+
+        &:before {
+          content: "Сегодня";
+          position: absolute;
+          top: 0;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          right: 20px;
+          color: #e7e7e7;
+          font-size: 12px;
+        }
+      }
     }
 
     .date-lesson {
