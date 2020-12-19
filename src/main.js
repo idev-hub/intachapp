@@ -4,7 +4,9 @@ import router from './router'
 import store from './store'
 import VueAxios from 'vue-axios'
 import * as axios from 'axios'
-import bridge from '@vkontakte/vk-bridge';
+import bridge from '@vkontakte/vk-bridge'
+
+const Vue = createApp(App)
 
 bridge.send("VKWebAppInit", {}).catch(console.error)
 bridge.send('VKWebAppGetEmail')
@@ -13,4 +15,4 @@ bridge.send('VKWebAppGetEmail')
     })
     .catch(console.error)
 
-createApp(App).use(store).use(router).use(VueAxios, axios).mount('#app')
+Vue.use(store).use(router).use(VueAxios, axios).mount('#app')
