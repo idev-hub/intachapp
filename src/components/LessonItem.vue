@@ -21,13 +21,17 @@ export default {
   },
   methods: {
     isCurrent(date) {
-      const _date = DateTime.fromISO(date).toFormat('dd MM')
-      const _local = DateTime.local().toFormat('dd MM')
+      const _date = DateTime.fromISO(date, {
+        locale: 'ru-RU',
+        zone: 'Asia/Yekaterinburg'
+      }).toFormat('dd MM')
+      const _local = DateTime.local().setLocale('ru-RU').setZone('Asia/Yekaterinburg').toFormat('dd MM')
       return _date === _local
     },
     getDate(date) {
       return DateTime.fromISO(date, {
-        locale: 'ru-RU'
+        locale: 'ru-RU',
+        zone: 'Asia/Yekaterinburg'
       }).toFormat('d MMMM, EEEE')
     },
   }
