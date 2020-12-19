@@ -5,15 +5,8 @@
   <p class="title-page">Расписание для группы {{ group }}.</p>
 
   <div class="lessons">
-    <div v-for="lesson in lessons" :key="lesson['date']" :class="{ current: isCurrent(lesson['date']) }">
-      <p class="notification"><span>{{ getDate(lesson['date']) }}</span></p>
-      <div class="items" v-if="lesson.data.length > 0">
-        <Lesson v-for="item in lesson.data" :key="item.number" v-bind="item"/>
-      </div>
-      <div v-else class="undefined">Ничего не найдено</div>
-    </div>
+    <LessonItem v-for="lesson in lessons" :key="lesson['date']" v-bind="lesson"></LessonItem>
   </div>
-
 
   <div class="contol" v-if="!loading">
     <button class="btn" @click="prevWeek()"><span class="icon-chevron-left"></span></button>
@@ -23,13 +16,12 @@
 </template>
 
 <script>
-import {DateTime} from 'luxon';
-import Lesson from "@/components/Lesson";
 import Loader from "@/components/Loader";
+import LessonItem from "@/components/LessonItem";
 
 export default {
   name: 'Week',
-  components: {Loader, Lesson},
+  components: {LessonItem, Loader},
   props: ['region', 'city', 'college', 'complex', 'group', 'week'],
   data: () => ({
     lessons: [],
@@ -38,25 +30,13 @@ export default {
     currWeek: undefined
   }),
   methods: {
-    isCurrent(date) {
-      const _date = DateTime.fromISO(date).toFormat('dd MM')
-      const _local = DateTime.local().toFormat('dd MM')
-      return _date === _local
-    },
-    getDate(date) {
-      return DateTime.fromISO(date, {
-        locale: 'ru-RU'
-      }).toFormat('d MMMM, EEEE')
-    },
     nextWeek() {
       this.currWeek++
-      console.log(this.currWeek)
       this.loading = true
       this.getLessons()
     },
     prevWeek() {
       this.currWeek--
-      console.log(this.currWeek)
       this.loading = true
       this.getLessons()
     },
@@ -64,8 +44,10 @@ export default {
       const params = {
         college: this.college,
         complex: this.complex,
-        group: this.group
+        group: this.group,
       }
+
+      if (this.week !== 'undefined') params.week = this.week
       if (this.currWeek !== undefined) params.week = this.currWeek
 
       this.$store.dispatch('getWeekLessons', params).then(res => {
@@ -99,70 +81,12 @@ export default {
 
 <style lang="scss" scoped>
 
-.undefined{
+.undefined {
   color: #728193;
 }
 
 .lessons {
   margin-top: 20px;
-
-  & > div {
-    &:not(:last-child) {
-      margin-bottom: 100px;
-    }
-
-    .notification {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 60px;
-      color: #ffffff;
-      margin: -20px -20px 20px -20px;
-      background: #3a424c;
-      font-weight: 600;
-      font-size: 13px;
-      text-transform: uppercase;
-    }
-
-    &.current {
-      background: #3a424c;
-      padding: 20px;
-      margin: 0 -20px;
-
-      .notification {
-        background: #58a758;
-
-        &:before {
-          content: "Сегодня";
-          position: absolute;
-          top: 0;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          left: 20px;
-          color: #e7e7e7;
-          font-size: 12px;
-        }
-      }
-    }
-
-    .date-lesson {
-      font-size: 18px;
-      margin: 0 0 20px 0;
-
-      & > span {
-        text-transform: capitalize;
-      }
-    }
-
-    .lesson {
-      margin-bottom: 20px;
-    }
-  }
 }
 
 .contol {

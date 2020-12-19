@@ -8,11 +8,11 @@
           </router-link>
         </div>
 
-<!--        <div class="icon">-->
-<!--          <router-link to="/lessons">-->
-<!--            <span class="icon-calendar"></span>-->
-<!--          </router-link>-->
-<!--        </div>-->
+        <div class="icon">
+          <router-link to="/lessons">
+            <span class="icon-calendar"></span>
+          </router-link>
+        </div>
 
         <div class="icon">
           <router-link to="/settings">
@@ -55,7 +55,7 @@ html, body {
   padding: 0;
 }
 
-body{
+body {
   margin-bottom: $nav-height;
   padding-top: 50px;
 }
@@ -71,22 +71,28 @@ body{
 
   .navs {
     height: $nav-height;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: space-around;
 
     .icon {
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 21px;
+      width: 50px;
+      height: 50px;
 
       a {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        &.router-link-active, &.router-link-exact-active {
+          color: #4c5561;
+        }
 
         img {
           width: 100%;

@@ -14,7 +14,7 @@ export default {
   methods: {
     getWeekUrl() {
       const user = this.$store.state.user
-      return `/week/${user.region}/${user.city}/${user.college}/${user.complex}/${user.group}`
+      return `/week/${user.region}/${user.city}/${user.college}/${user.complex}/${user.group}/undefined`
     }
   },
 }

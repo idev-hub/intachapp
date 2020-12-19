@@ -1,5 +1,5 @@
 <template>
-  <div v-if="active" class="loader">
+  <div v-if="active" class="loader" :class="{localy: localy}">
     <div class="loadingio-spinner-ripple-3zo152wkxnr">
       <div class="ldio-t3cww35auem">
         <div></div>
@@ -12,11 +12,11 @@
 <script>
 export default {
   name: "Loader",
-  props: ['active']
+  props: ['active', 'localy']
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @keyframes ldio-t3cww35auem {
   0% {
     top: 93.84px;
@@ -45,6 +45,11 @@ export default {
   align-items: center;
   background: #2f3640;
   justify-content: center;
+
+  &.localy{
+    position: absolute;
+    background: rgba(#2f3640, .8);
+  }
 }
 
 

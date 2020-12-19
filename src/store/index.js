@@ -127,6 +127,21 @@ export default createStore({
                     return reject(reason)
                 })
             })
+        },
+        getLessonsDate: ({state}, params) => {
+            return new Promise((resolve, reject) => {
+                axios.get(`${state.api}api/colleges/${params['college']}/methods/lessons`, {
+                    params: {
+                        complex: params['complex'],
+                        group: params['group'],
+                        date: params['date']
+                    }
+                }).then(response => {
+                    return resolve(response.data)
+                }).catch(reason => {
+                    return reject(reason)
+                })
+            })
         }
     },
     modules: {}

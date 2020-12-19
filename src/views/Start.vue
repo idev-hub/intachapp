@@ -103,7 +103,7 @@ export default {
           path: "/"
         })
       } catch (e) {
-        console.log(e)
+       //
       }
     },
     onChangeRegion(event) {
@@ -146,9 +146,8 @@ export default {
       this.optionGroups = []
       this.loading = true
     },
-    onChangeGroups(event) {
+    onChangeGroups() {
       this.loading = false
-      console.log(event)
     },
 
     async getGroups(collegeId, complexId) {

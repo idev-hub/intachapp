@@ -6,7 +6,7 @@
         "serve": "vue-cli-service serve --port=10888",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
-        "tunnel": "vk-tunnel --insecure=0 --http-protocol=https --ws-protocol=wss --host=localhost --port=10888"
+        "tunnel": "vk-tunnel --insecure=1 --http-protocol=http --ws-protocol=wss --host=192.168.43.85 --port=10888"
     },
     "dependencies": {
         "@vkontakte/vk-bridge": "^2.3.0",
