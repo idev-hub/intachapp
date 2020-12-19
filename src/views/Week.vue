@@ -97,7 +97,7 @@ export default {
           height: 40px;
           display: flex;
           align-items: center;
-          right: 20px;
+          left: 20px;
           color: #e7e7e7;
           font-size: 12px;
         }

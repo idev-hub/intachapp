@@ -115,7 +115,7 @@ html, body {
 .title-page{
   position: absolute;
   left: 20px;
-  top: 5px;
+  top: 10px;
   color: #728193;
   font-size: 14px;
   font-weight: 500;
