@@ -13,12 +13,12 @@
         <span class="icon-chevron-right"></span>
       </button>
     </div>
-    <div class="items" v-if="days.length > 0">
-      <button v-for="(weekday, index) in weekdays" :key="index" class="dayOfWeek" disabled>{{ weekday }}</button>
-      <button v-for="n in days[0].dayOfWeek" :key="n" class="empty" disabled></button>
+    <div class="cells" v-if="days.length > 0">
+      <div v-for="(weekday, index) in weekdays" :key="index" class="cell disable dayOfWeek">{{ weekday }}</div>
+      <div class="cell disable empty" v-for="n in days[0].dayOfWeek" :key="n"></div>
       <button v-for="(day, index) in days" :key="day.number" :disabled="day.dayOfWeek === 6"
-              @click="selectDateEvent(day.date, index)" :class="{select: day.select, current: day.current}" class="day">
-        {{ day.number }}
+              @click="selectDateEvent(day.date, index)" :class="{select: day.select, current: day.current}"
+              class="cell day">{{ day.number }}
       </button>
     </div>
   </div>
@@ -161,32 +161,42 @@ export default {
     }
   }
 
-  .items {
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: repeat(7, minmax(25px, 1fr));
-    grid-auto-rows: 35px;
-    grid-gap: 5px;
+  .cells {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 1%;
 
-    button {
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 13.28%;
+      height: 35px;
       background: #4c5561;
+      margin-bottom: 1%;
 
-      &:not(:disabled) {
+
+      &:not(:disabled){
         &:hover, &:active, &:focus {
           background: #3a424c;
         }
       }
 
-      &:disabled {
+      &.disable, &:disabled {
+        user-select: none;
         cursor: default;
         background: none;
+
+        &:hover, &:active, &:focus {
+          background: none;
+        }
       }
 
-      &.select {
+      &.select, &.select:hover{
         background: #181b1f !important;
       }
 
-      &.current {
+      &.current, &.current:hover{
         background: #58a758;
       }
     }
