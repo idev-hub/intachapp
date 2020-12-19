@@ -20,9 +20,6 @@ export default {
     discipline: String,
     teacher: String,
     cabinet: String
-  },
-  created() {
-    console.log(this.$props)
   }
 }
 </script>
@@ -37,18 +34,18 @@ export default {
   position: relative;
   overflow: hidden;
 
-  &:hover{
+  &:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 24px rgba(0,0,0,.2);
+    box-shadow: 0 0 24px rgba(0, 0, 0, .2);
 
-    &:after, &:before{
+    &:after, &:before {
       opacity: 0;
       visibility: hidden;
     }
   }
 
   &.canceled {
-    &:after{
+    &:after {
       content: "";
       position: absolute;
       left: 0;
@@ -59,24 +56,18 @@ export default {
       transition: .2s;
       background: rgba(red, .5);
     }
-    &:before{
-      content: 'Отменена';
-      position: absolute;
-      bottom: 30px;
-      right: 20px;
-      text-transform: uppercase;
-      z-index: 1;
-      transition: .2s;
-      color: #c4c4c4;
-    }
   }
 
   & > p {
+    display: flex;
+    justify-content: space-between;
     line-height: 150%;
     font-size: 14px;
-    &:not(:last-child){
+
+    &:not(:last-child) {
       border-bottom: 1px solid #4c5561;
     }
+
     padding: 10px 0;
     margin: 0;
     color: #c4c4c4;
@@ -90,7 +81,7 @@ export default {
 
     & > span {
       color: #ffffff;
-
+      text-align: right;
     }
   }
 }

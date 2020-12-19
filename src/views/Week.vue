@@ -15,7 +15,7 @@
   </div>
 
 
-  <div class="contol">
+  <div class="contol" v-if="!loading">
     <button class="btn" @click="prevWeek()"><span class="icon-chevron-left"></span></button>
     <p class="currWeek" v-if="currWeek !== undefined">{{ currWeek.toString() }}</p>
     <button class="btn" @click="nextWeek()"><span class="icon-chevron-right"></span></button>
