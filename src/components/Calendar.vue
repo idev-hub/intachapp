@@ -164,7 +164,6 @@ export default {
   .cells {
     display: flex;
     flex-wrap: wrap;
-    grid-gap: 1%;
 
     .cell {
       display: flex;
@@ -174,6 +173,11 @@ export default {
       height: 35px;
       background: #4c5561;
       margin-bottom: 1%;
+      margin-right: 1%;
+
+      &:nth-child(7n){
+        margin-right: 0;
+      }
 
 
       &:not(:disabled){
