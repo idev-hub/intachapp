@@ -8,11 +8,11 @@
           </router-link>
         </div>
 
-        <div class="icon">
-          <router-link to="/lessons">
-            <span class="icon-calendar"></span>
-          </router-link>
-        </div>
+<!--        <div class="icon">-->
+<!--          <router-link to="/lessons">-->
+<!--            <span class="icon-calendar"></span>-->
+<!--          </router-link>-->
+<!--        </div>-->
 
         <div class="icon">
           <router-link to="/settings">
@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/style.css";
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
 
 $nav-height: 50px;
 
@@ -48,11 +48,16 @@ $nav-height: 50px;
 }
 
 html, body {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   color: #ffffff;
-  margin: 0 0 $nav-height 0;
+  margin: 0;
   background: #2f3640;
-  padding: 40px 0 0 0;
+  padding: 0;
+}
+
+body{
+  margin-bottom: $nav-height;
+  padding-top: 50px;
 }
 
 #nav {
@@ -79,6 +84,10 @@ html, body {
       font-size: 21px;
 
       a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         img {
           width: 100%;
           height: 100%;
@@ -106,16 +115,17 @@ html, body {
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  display: block;
+  display: table;
   margin: auto;
   max-width: 600px;
   width: 100%;
+  position: relative;
 }
 
-.title-page{
+.title-page {
   position: absolute;
   left: 20px;
-  top: 10px;
+  top: -50px;
   color: #728193;
   font-size: 14px;
   font-weight: 500;

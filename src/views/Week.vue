@@ -8,9 +8,10 @@
   <div class="lessons">
     <div v-for="lesson in lessons" :key="lesson['date']" :class="{ current: isCurrent(lesson['date']) }">
       <p class="notification"><span>{{ getDate(lesson['date']) }}</span></p>
-      <div class="items">
+      <div class="items" v-if="lesson.data.length > 0" >
         <Lesson v-for="item in lesson.data" :key="item.number" v-bind="item"/>
       </div>
+      <div v-else>Ничего не найдено</div>
     </div>
   </div>
 </template>
@@ -62,6 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 .lessons {
+  margin-top: 20px;
   & > div {
     margin-bottom: 100px;
 

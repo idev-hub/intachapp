@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <p class="title-page">Главная</p>
     <Splash text="Расписание на неделю" icon="calendar" :link="getWeekUrl()"></Splash>
   </div>
 </template>

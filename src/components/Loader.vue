@@ -43,6 +43,7 @@ export default {
   left: 0;
   display: flex;
   align-items: center;
+  background: #2f3640;
   justify-content: center;
 }
 

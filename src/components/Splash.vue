@@ -1,9 +1,7 @@
 <template>
   <div class="splash">
     <router-link :to="link">
-      <span class="ico" v-if="icon">
-          <span :class="'icon-'+icon"></span>
-        </span>
+      <span v-if="icon" class="ico" :class="'icon-'+icon"></span>
       <span class="text">{{ text }}</span>
     </router-link>
   </div>

@@ -1,4 +1,7 @@
 <template>
+  <p class="title-page">Ввод данных</p>
+  <Loader :active="loading"/>
+
   <div class="start">
     <div class="form-control">
       <div v-if="optionRegions.length">
@@ -60,9 +63,13 @@
 </template>
 
 <script>
+import Loader from "@/components/Loader";
+
 export default {
   name: 'Start',
+  components: {Loader},
   data: () => ({
+    loading: true,
     error: undefined,
     region: undefined,
     city: undefined,
@@ -75,9 +82,10 @@ export default {
     optionComplexes: [],
     optionGroups: []
   }),
-  async mounted() {
-    console.log(this.$store.state.user)
-    await this.getRegions()
+  mounted() {
+    this.getRegions().then(() => {
+      this.loading = false
+    })
   },
   methods: {
     async start() {
@@ -109,6 +117,7 @@ export default {
       this.optionColleges = []
       this.optionComplexes = []
       this.optionGroups = []
+      this.loading = true
     },
     onChangeCity(event) {
       this.getColleges(event.target.value)
@@ -119,6 +128,7 @@ export default {
       this.optionColleges = []
       this.optionComplexes = []
       this.optionGroups = []
+      this.loading = true
     },
     onChangeCollege(event) {
       this.getComplexes(event.target.value)
@@ -127,14 +137,17 @@ export default {
 
       this.optionComplexes = []
       this.optionGroups = []
+      this.loading = false
     },
     onChangeComplex(event) {
       this.getGroups(this.college, event.target.value)
 
       this.group = undefined
       this.optionGroups = []
+      this.loading = true
     },
     onChangeGroups(event) {
+      this.loading = false
       console.log(event)
     },
 
@@ -143,12 +156,14 @@ export default {
         college: collegeId,
         complex: complexId
       })
+      this.loading = false
     },
     async getComplexes(collegeId) {
       try {
         this.optionComplexes = await this.$store.dispatch('getComplexes', {
           college: collegeId
         })
+        this.loading = false
       } catch (e) {
         this.optionComplexes = []
         this.complex = 1
@@ -158,11 +173,13 @@ export default {
       this.optionColleges = await this.$store.dispatch('getColleges', {
         city: cityId
       })
+      this.loading = false
     },
     async getCities(regionId) {
       this.optionCities = await this.$store.dispatch('getCities', {
         region: regionId
       })
+      this.loading = false
     },
     async getRegions() {
       this.optionRegions = await this.$store.dispatch('getRegions')
@@ -190,4 +207,47 @@ export default {
 
 <style lang="scss" scoped>
 
+.start {
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
+.form-control {
+  &:not(:last-child) {
+    margin-bottom: 2em;
+  }
+
+
+  label {
+    color: #728193;
+    display: block;
+    margin-bottom: .5em;
+  }
+
+  select, input {
+    width: 100%;
+    height: 40px;
+    background: #3a424c;
+    border: none;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 0 10px;
+    font-family: "Nunito", sans-serif;
+  }
+
+  input {
+
+  }
+}
+
+.btn {
+  width: 100%;
+  height: 50px;
+  background: #181b1f;
+  border: none;
+  color: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+}
 </style>

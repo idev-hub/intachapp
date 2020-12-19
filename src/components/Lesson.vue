@@ -73,6 +73,7 @@ export default {
 
   & > p {
     line-height: 150%;
+    font-size: 14px;
     &:not(:last-child){
       border-bottom: 1px solid #4c5561;
     }
