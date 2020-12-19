@@ -1,5 +1,5 @@
 <template>
-  <div id="nav" v-if="this.$store.state.user">
+  <div id="nav">
     <div class="container">
       <div class="navs">
         <div class="icon">
@@ -11,6 +11,12 @@
         <div class="icon">
           <router-link to="/lessons">
             <span class="icon-calendar"></span>
+          </router-link>
+        </div>
+
+        <div class="icon">
+          <router-link to="/news">
+            <span class="icon-globe"></span>
           </router-link>
         </div>
 
@@ -57,7 +63,8 @@ html, body {
 
 body {
   margin-bottom: $nav-height;
-  padding-top: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 #nav {
@@ -73,7 +80,7 @@ body {
     height: $nav-height;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 
     .icon {
       display: flex;
@@ -128,15 +135,14 @@ body {
   position: relative;
 }
 
-.title-page {
-  position: absolute;
-  left: 20px;
-  top: -50px;
+.title {
   color: #728193;
   font-size: 14px;
   font-weight: 500;
   user-select: none;
   letter-spacing: .07em;
+  margin: 0 0 20px 0;
+  padding: 0;
 }
 
 </style>

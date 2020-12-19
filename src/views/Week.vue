@@ -2,7 +2,7 @@
   <div class="app-error" v-if="error">{{ error.message }}</div>
   <Loader :active="loading"></Loader>
 
-  <p class="title-page">Расписание для группы {{ group }}.</p>
+  <p class="title" v-if="groupText">Расписание для группы {{ groupText }}.</p>
 
   <div class="lessons">
     <LessonItem v-for="lesson in lessons" :key="lesson['date']" v-bind="lesson"></LessonItem>
@@ -13,21 +13,30 @@
     <p class="currWeek" v-if="currWeek !== undefined">{{ currWeek.toString() }}</p>
     <button class="btn" @click="nextWeek()"><span class="icon-chevron-right"></span></button>
   </div>
+
+
+  <p class="title">Прочее</p>
+  <div class="splashes">
+    <Splash text="Поделится расписанием" icon="message"></Splash>
+    <Splash text="Сообщить об ошибке" icon="warning" background="#bf4a4a"></Splash>
+  </div>
 </template>
 
 <script>
 import Loader from "@/components/Loader";
 import LessonItem from "@/components/LessonItem";
+import Splash from "@/components/Splash";
 
 export default {
   name: 'Week',
-  components: {LessonItem, Loader},
+  components: {Splash, LessonItem, Loader},
   props: ['region', 'city', 'college', 'complex', 'group', 'week'],
   data: () => ({
     lessons: [],
     error: undefined,
     loading: true,
-    currWeek: undefined
+    currWeek: undefined,
+    groupText: undefined
   }),
   methods: {
     nextWeek() {
@@ -53,6 +62,7 @@ export default {
       this.$store.dispatch('getWeekLessons', params).then(res => {
         this.lessons = res
         this.currWeek = res[0].week
+        this.groupText = res[0].group
         this.loading = false
       }).catch(e => {
         this.error = e
@@ -81,12 +91,20 @@ export default {
 
 <style lang="scss" scoped>
 
+.splashes {
+  .splash {
+    &:not(:last-child){
+      margin-bottom: 20px;
+    }
+  }
+}
+
 .undefined {
   color: #728193;
 }
 
 .lessons {
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .contol {
@@ -101,7 +119,7 @@ export default {
   margin: 0 -20px;
   padding: 0 20px;
   box-shadow: 0 -3px 12px rgba(0, 0, 0, .1);
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   margin-top: 50px;
 
   .currWeek {

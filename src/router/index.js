@@ -9,6 +9,12 @@ const routes = [
         meta: {requiresAuth: true}
     },
     {
+        path: '/news',
+        name: 'News',
+        component: () => import('../views/News.vue'),
+        meta: {requiresAuth: true}
+    },
+    {
         path: '/lessons',
         name: 'Lessons',
         component: () => import('../views/Lessons.vue'),
@@ -29,8 +35,7 @@ const routes = [
         path: '/week/:region/:city/:college/:complex/:group/:week',
         props: true,
         name: 'Week',
-        component: () => import('../views/Week.vue'),
-        meta: {requiresAuth: true}
+        component: () => import('../views/Week.vue')
     }
 ]
 

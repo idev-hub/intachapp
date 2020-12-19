@@ -1,5 +1,5 @@
 <template>
-  <div class="item" :class="{ current: isCurrent(date) }">
+  <div class="item" :class="getClasses(date)">
     <p class="notification"><span>{{ getDate(date) }}</span></p>
     <div class="items" v-if="data.length > 0">
       <Lesson v-for="item in data" :key="item.number" v-bind="item"/>
@@ -20,13 +20,16 @@ export default {
     data: Array
   },
   methods: {
-    isCurrent(date) {
-      const _date = DateTime.fromISO(date, {
-        locale: 'ru-RU',
-        zone: 'Asia/Yekaterinburg'
-      }).toFormat('dd MM')
-      const _local = DateTime.local().setLocale('ru-RU').setZone('Asia/Yekaterinburg').toFormat('dd MM')
-      return _date === _local
+    getClasses(date) {
+      const _date = DateTime.fromISO(date)
+      const _local = DateTime.local()
+      let classname = ''
+
+      if (_date.toISODate() === _local.toISODate()) classname += 'current '
+      if (_date.toISODate() === _local.plus({day: 1}).toISODate()) classname += 'after '
+      if (_date.toISODate() === _local.minus({day: 1}).toISODate()) classname += 'before '
+
+      return classname
     },
     getDate(date) {
       return DateTime.fromISO(date, {
@@ -59,6 +62,39 @@ export default {
     font-weight: 600;
     font-size: 13px;
     text-transform: uppercase;
+
+    &:before{
+      content: none;
+      position: absolute;
+      top: 0;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      left: 20px;
+      color: #e7e7e7;
+      font-size: 12px;
+    }
+  }
+
+
+  &.after{
+    .notification {
+      background: #58a758;
+
+      &:before {
+        content: "Завтра";
+      }
+    }
+  }
+
+  &.before{
+    .notification {
+      background: #bf4a4a;
+
+      &:before {
+        content: "Вчера";
+      }
+    }
   }
 
   &.current {
@@ -67,18 +103,10 @@ export default {
     margin: 0 -20px;
 
     .notification {
-      background: #58a758;
+      background: #5885a7;
 
       &:before {
         content: "Сегодня";
-        position: absolute;
-        top: 0;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        left: 20px;
-        color: #e7e7e7;
-        font-size: 12px;
       }
     }
   }

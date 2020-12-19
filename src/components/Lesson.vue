@@ -54,7 +54,7 @@ export default {
       height: 100%;
       z-index: 0;
       transition: .2s;
-      background: rgba(red, .5);
+      background: rgba(#bf4a4a, .8);
     }
   }
 

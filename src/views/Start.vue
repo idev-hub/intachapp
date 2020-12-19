@@ -1,5 +1,5 @@
 <template>
-  <p class="title-page">Ввод данных</p>
+  <p class="title">Ввод данных</p>
   <Loader :active="loading"/>
 
   <div class="start">

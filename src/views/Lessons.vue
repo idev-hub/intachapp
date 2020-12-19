@@ -1,13 +1,17 @@
 <template>
-  <div class="">
-    <p class="title-page">Расписание по дате.</p>
-    <div class="calendar-container">
-      <Loader :active="loading" :localy="true"></Loader>
-      <Calendar v-on:select="selected"/>
-    </div>
-    <div class="lessons">
-      <LessonItem v-if="lesson" v-bind="lesson"/>
-    </div>
+  <p class="title">Расписание по дате.</p>
+  <div class="calendar-container">
+    <Loader :active="loading" :localy="true"></Loader>
+    <Calendar v-on:select="selected"/>
+  </div>
+  <div class="lessons">
+    <LessonItem v-if="lesson" v-bind="lesson"/>
+  </div>
+
+  <p class="title">Прочее</p>
+  <div class="splashes">
+    <Splash text="Поделится расписанием" icon="message"></Splash>
+    <Splash text="Сообщить об ошибке" icon="warning" background="#bf4a4a"></Splash>
   </div>
 </template>
 
@@ -15,10 +19,11 @@
 import Calendar from "@/components/Calendar";
 import LessonItem from "@/components/LessonItem";
 import Loader from "@/components/Loader";
+import Splash from "@/components/Splash";
 
 export default {
   name: "Lessons",
-  components: {Loader, LessonItem, Calendar},
+  components: {Splash, Loader, LessonItem, Calendar},
   data: () => ({
     date: undefined,
     error: undefined,
